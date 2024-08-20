@@ -53,7 +53,7 @@ jobs:
       - name: Build
         run: yarn build:ci
 
-      - name: Run application and tests
+      - name: Start application and tests
         run: |
           yarn start:ci &
           sleep 5 &&
