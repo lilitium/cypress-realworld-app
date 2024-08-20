@@ -1,0 +1,1 @@
+export const PASSWORD = "s3cret"
