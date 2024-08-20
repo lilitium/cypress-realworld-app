@@ -40,6 +40,13 @@ jobs:
           if-no-files-found: error
           path: build
 
+      - name: Save node_modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          if-no-files-found: error
+          path: node_modules
+
   local-app:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -56,6 +63,12 @@ jobs:
         with:
           name: build
           path: build
+      
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
       - name: Node info
         run: node -v
