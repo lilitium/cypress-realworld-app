@@ -9,43 +9,76 @@ on:
       - develop
 
 jobs:
-  test:
+  install:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
+    container:
+      image: mcr.microsoft.com/playwright:focal
+      options: --user 1001
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: yarn install
 
-      - name: Run the dev server in the background
-        run: yarn start:ci &
+      - name: Build application
+        run: yarn build
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+  playwright-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:focal
+      options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+
+      - name: Run Playwright Tests - ${{ matrix.browser }}
+        run: npx playwright test --project=${{ matrix.browser }}
         env:
-          SEED_USERBASE_SIZE: 5
-          SEED_CONTACTS_PER_USER: 3
-          SEED_PAYMENTS_PER_USER: 15
-          SEED_REQUESTS_PER_USER: 10
-          SEED_BANK_ACCOUNTS_PER_USER: 1
-          SEED_LIKES_PER_USER: 2
-          SEED_COMMENTS_PER_USER: 2
-          SEED_NOTIFICATIONS_PER_USER: 5
-          SEED_BANK_TRANSFERS_PER_USER: 5
-          SEED_DEFAULT_USER_PASSWORD: s3cret
-          PAGINATION_PAGE_SIZE: 10
-          PORT: 3000
-          VITE_BACKEND_PORT: 3001
-          BACKEND_PORT: 3001
+          PLAYWRIGHT_BROWSER_NAME: ${{ matrix.browser }}
 
-      - name: Wait for the server to be ready
-        run: npx wait-on http://localhost:3001
+  playwright-mobile-tests:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:focal
+      options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Download the build folders
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+
+      - name: Run Playwright Mobile Tests - ${{ matrix.browser }}
+        run: npx playwright test --project=${{ matrix.browser }} --config=playwright.mobile.config.ts
+        env:
+          PLAYWRIGHT_BROWSER_NAME: ${{ matrix.browser }}
