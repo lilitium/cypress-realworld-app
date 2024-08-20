@@ -31,7 +31,6 @@ test.describe('Bank Accaunts', () => {
 
         await createBankAccount(page, bankData);
         const bank = (page.locator('text=' + bankData.bankName));
-        
         await expect(bank.nth(0)).toBeVisible();
     });
 });
