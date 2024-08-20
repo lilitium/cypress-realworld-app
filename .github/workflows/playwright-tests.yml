@@ -44,6 +44,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
       
+      #   run: npx playwright install --with-deps
+
       - name: Setup Playwright
         uses: ./.github/actions/setup-playwright
 
