@@ -1,8 +1,9 @@
-import { expect, test } from "@playwright/test";
+import { TestInfo, expect, test } from "@playwright/test";
 import { signIn, isMobile} from "./common/utils";
 import { fetchDataFromDatabase } from "./common/fetchData";
 import { PASSWORD } from './common/constants';
 import { seedData } from "./common/seedData";
+import { getScreenshotPath } from "./common/getScreenshotPath";
 
 test.beforeEach(async () => {
     await seedData();
@@ -10,10 +11,11 @@ test.beforeEach(async () => {
 
 test.describe('User Sign-up and Login', () => {
 
-    test('should redirect unauthenticated user to signin page', async({ page }) => {
+    test('should redirect unauthenticated user to signin page', async({ page }, testInfo: TestInfo) => {
         await page.goto('/personal');
+        
         await expect(page).toHaveURL('/signin');
-        await page.screenshot({path: "tests/screenshots/redirect-to-signin.png"});
+        await page.screenshot({path: getScreenshotPath('redirectUnauthenticatedToSignIn', testInfo)});
     });
 
     test('should redirect to the home page after login', async({ page }) => {
@@ -24,7 +26,7 @@ test.describe('User Sign-up and Login', () => {
         await expect(page).toHaveURL('/');
     });
 
-    test('should remember a user for 30 days after login', async({ page }) => {
+    test('should remember a user for 30 days after login', async({ page }, testInfo: TestInfo) => {
 
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
@@ -42,7 +44,8 @@ test.describe('User Sign-up and Login', () => {
             await page.click('[data-test="sidenav-toggle"]')
         }
         await page.click('[data-test="sidenav-signout"]');
-        await page.screenshot({path: "tests/screenshots/redirect-to-signin.png"});
-        expect(page).toHaveURL('/signin');
+        
+        await expect(page).toHaveURL('/signin');
+        await page.screenshot({path: getScreenshotPath('rememberUserFor30Days', testInfo)});
     });
 });
