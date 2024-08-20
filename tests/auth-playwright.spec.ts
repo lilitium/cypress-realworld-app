@@ -46,6 +46,7 @@ test.describe('User Sign-up and Login', () => {
         await page.click('[data-test="sidenav-signout"]');
         
         await expect(page).toHaveURL('/signin');
+        
         await page.screenshot({path: getScreenshotPath('rememberUserFor30Days', testInfo)});
     });
 });
