@@ -25,9 +25,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
+      
+      - name: Install playwright browsers
+        run: npx playwright install --with-deps
 
       - name: Run the dev server in the background
-        run: yarn start:ci
+        run: yarn dev &
         env:
           SEED_USERBASE_SIZE: 5
           SEED_CONTACTS_PER_USER: 3
