@@ -29,7 +29,6 @@ jobs:
       - name: Run the dev server in the background
         run: yarn start:ci &
         env:
-          NODE_ENV: development
           SEED_USERBASE_SIZE: 5
           SEED_CONTACTS_PER_USER: 3
           SEED_PAYMENTS_PER_USER: 15
@@ -43,6 +42,7 @@ jobs:
           PAGINATION_PAGE_SIZE: 10
           PORT: 3000
           VITE_BACKEND_PORT: 3001
+          BACKEND_PORT: 3001
 
       - name: Wait for the server to be ready
         run: npx wait-on http://localhost:3000
