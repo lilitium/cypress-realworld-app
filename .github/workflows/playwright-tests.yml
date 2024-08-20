@@ -79,6 +79,7 @@ jobs:
       - name: Build
         run: yarn build:ci
 
+
       - name: Start application and tests
         run: |
           yarn start:ci &
