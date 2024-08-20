@@ -42,30 +42,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-
-      # - name: Cache Playwright browsers
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.cache/ms-playwright
-      #       ~/.cache/ms-playwright-deps
-      #     key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-playwright-
       
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-
-      - name: Cache build
-        uses: actions/cache@v4
-        id: build-cache
-        with:
-          path: |
-            build
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/src/**') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
-            ${{ runner.os }}-build-
 
       - name: Build
         run: yarn build:ci
