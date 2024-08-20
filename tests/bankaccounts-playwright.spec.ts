@@ -11,7 +11,6 @@ test.beforeEach(async () => {
 
 test.describe('Bank Accaunts', () => {
     test('User should be allowed to create new bank account', async({page}) => {
-        
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
    
@@ -32,6 +31,7 @@ test.describe('Bank Accaunts', () => {
 
         await createBankAccount(page, bankData);
         const bank = (page.locator('text=' + bankData.bankName));
+        
         await expect(bank.nth(0)).toBeVisible();
     });
 });
