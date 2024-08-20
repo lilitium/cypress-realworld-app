@@ -37,7 +37,12 @@ jobs:
         run: node -v
 
       - name: Run application in the background
-        run: yarn start:ci &
+        run: |
+          yarn start:ci &
+          sleep 10 &&
+          curl http://localhost:3000 &&
+          npx playwright test
+        # run: yarn start:ci &
         env:
           SEED_USERBASE_SIZE: 5
           SEED_CONTACTS_PER_USER: 3
@@ -57,5 +62,5 @@ jobs:
       # - name: Wait for the server to be ready
       #   run: npx wait-on http://localhost:3000
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      # - name: Run Playwright tests
+        # run: npx playwright test
