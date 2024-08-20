@@ -27,7 +27,7 @@ jobs:
         run: yarn install
 
       - name: Run the dev server in the background
-        run: yarn dev &
+        run: yarn start:ci &
         env:
           NODE_ENV: development
           SEED_USERBASE_SIZE: 5
