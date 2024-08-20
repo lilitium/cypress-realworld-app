@@ -23,11 +23,11 @@ test.describe('User Sign-up and Login', () => {
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
         await signIn(page, user.username, PASSWORD, true);
+
         await expect(page).toHaveURL('/');
     });
 
     test('should remember a user for 30 days after login', async({ page }, testInfo: TestInfo) => {
-
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
    
