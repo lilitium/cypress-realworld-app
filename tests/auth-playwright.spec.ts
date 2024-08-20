@@ -2,7 +2,11 @@ import { expect, test } from "@playwright/test";
 import { signIn, isMobile} from "./common/utils";
 import { fetchDataFromDatabase } from "./common/fetchData";
 import { PASSWORD } from './common/constants';
+import { seedData } from "./common/seedData";
 
+test.beforeEach(async () => {
+    await seedData();
+});
 
 test.describe('User Sign-up and Login', () => {
 

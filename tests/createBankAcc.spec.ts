@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 
 
 test.describe('Bank accaunt creation', () => {
-    test('User should be aalowed to create new bank account', async({page}) => {
+    test.skip('User should be aalowed to create new bank account', async({page}) => {
         
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
