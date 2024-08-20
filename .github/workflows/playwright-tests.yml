@@ -61,7 +61,7 @@ jobs:
         run: node -v
 
       - name: Run application in the background
-        run: yarn dev &
+        run: yarn start:ci &
         env:
           SEED_USERBASE_SIZE: 5
           SEED_CONTACTS_PER_USER: 3
