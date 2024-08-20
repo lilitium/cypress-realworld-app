@@ -253,17 +253,6 @@
       "isDeleted": false,
       "createdAt": "2024-01-26T14:01:01.815Z",
       "modifiedAt": "2024-03-07T08:44:31.174Z"
-    },
-    {
-      "id": "x04X0dhRQ",
-      "uuid": "71803021-2184-41b7-bcaa-1a49280c0ccc",
-      "userId": "uBmeaz5pX",
-      "bankName": "streamline web-enabled content",
-      "accountNumber": "p6zkdycfyj",
-      "routingNumber": "dxrb8oksh",
-      "isDeleted": false,
-      "createdAt": "2024-08-20T16:00:12.916Z",
-      "modifiedAt": "2024-08-20T16:00:12.916Z"
     }
   ],
   "transactions": [
