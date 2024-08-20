@@ -43,11 +43,11 @@ jobs:
       - name: Install node_modules
         run: yarn install
       
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      # - name: Install Playwright browsers
+      #   run: npx playwright install --with-deps
 
-      # - name: Setup Playwright
-      #   uses: ./.github/actions/setup-
+      - name: Setup Playwright
+        uses: ./.github/actions/setup-playwright
       
       - name: Cache FE build
         uses: actions/cache@v4
@@ -55,9 +55,8 @@ jobs:
         with:
           path: |
             build
-          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/src/**') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
             ${{ runner.os }}-build-
 
       - name: Create FE build
