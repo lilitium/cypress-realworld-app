@@ -5,7 +5,7 @@ import { PASSWORD } from './common/constants';
 import { faker } from '@faker-js/faker';
 import { seedData } from './common/seedData';
 
-test.beforeEach(async () => {
+test.beforeAll(async () => {
     await seedData();
 });
 
