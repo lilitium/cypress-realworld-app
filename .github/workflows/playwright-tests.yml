@@ -47,7 +47,18 @@ jobs:
         run: npx playwright install --with-deps
 
       # - name: Setup Playwright
-      #   uses: ./.github/actions/setup-playwright
+      #   uses: ./.github/actions/setup-
+      
+      - name: Cache build output
+        uses: actions/cache@v4
+        id: build-cache
+        with:
+          path: |
+            build
+          key: ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/src/**') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ hashFiles('**/yarn.lock') }}
+            ${{ runner.os }}-build-
 
       - name: Build
         run: yarn build:ci
