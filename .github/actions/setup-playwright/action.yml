@@ -27,9 +27,9 @@ runs:
       run: |
         npm exec -- playwright install --with-deps
 
-    # # Install only the OS dependencies if cache hit
-    # - name: 🏗 Install Playwright OS dependencies
-    #   if: steps.playwright-cache.outputs.cache-hit == 'true'
-    #   shell: bash
-    #   run: |
-    #     npm exec -- playwright install-deps
+    # Install only the OS dependencies if cache hit
+    - name: 🏗 Install Playwright OS dependencies
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+      shell: bash
+      run: |
+        npm exec -- playwright install-deps
