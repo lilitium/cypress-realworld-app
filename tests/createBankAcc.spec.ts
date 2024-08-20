@@ -1,12 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { signIn, createBankAccount } from './common/utils';
+import { signIn, createBankAccount, isMobile } from './common/utils';
 import { fetchDataFromDatabase } from './common/fetchData';
 import { PASSWORD } from './common/constants';
 import { faker } from '@faker-js/faker';
+import { seedData } from './common/seedData';
 
+// test.beforeEach(async () => {
+//     await seedData();
+// });
 
 test.describe('Bank accaunt creation', () => {
-    test.skip('User should be aalowed to create new bank account', async({page}) => {
+    test.skip('User should be allowed to create new bank account', async({page}) => {
         
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
@@ -14,6 +18,10 @@ test.describe('Bank accaunt creation', () => {
         await signIn(page, user.username, PASSWORD, true);
         const newBankName = 'AAA bank';
         
+        const mobileDevice = await isMobile(page);
+        if (mobileDevice) {
+            await page.click('[data-test="sidenav-toggle"]');
+        }
         await page.click('[data-test="sidenav-bankaccounts"]');
         await page.click('[data-test="bankaccount-new"]');
 
