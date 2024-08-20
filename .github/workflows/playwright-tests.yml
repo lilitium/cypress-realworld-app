@@ -9,7 +9,7 @@ on:
       - develop
 
 jobs:
-  install:
+  tests:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -33,43 +33,6 @@ jobs:
       - name: Build
         run: yarn build:ci
 
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          if-no-files-found: error
-          path: build
-
-      - name: Save node_modules
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          if-no-files-found: error
-          path: node_modules
-
-  local-app:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    needs: install
-    strategy:
-      matrix:
-        node-version: [20.x]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Download the build folders
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: build
-      
-      - name: Download node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: node_modules
-
       - name: Node info
         run: node -v
 
@@ -91,8 +54,8 @@ jobs:
           VITE_BACKEND_PORT: 3001
           BACKEND_PORT: 3001
 
-      - name: Wait for the server to be ready
-        run: npx wait-on http://localhost:3000
+      # - name: Wait for the server to be ready
+      #   run: npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
         run: npx playwright test
