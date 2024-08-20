@@ -5,7 +5,7 @@ import { PASSWORD } from './common/constants';
 import { seedData } from "./common/seedData";
 import { getScreenshotPath } from "./common/getScreenshotPath";
 
-test.beforeAll(async () => {
+test.beforeEach(async () => {
     await seedData();
 });
 

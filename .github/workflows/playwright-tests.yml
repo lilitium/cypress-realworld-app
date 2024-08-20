@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
       
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      # - name: Install Playwright browsers
+      #   run: npx playwright install --with-deps
 
       - name: Build
         run: yarn build:ci
