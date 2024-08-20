@@ -253,6 +253,17 @@
       "isDeleted": false,
       "createdAt": "2024-01-26T14:01:01.815Z",
       "modifiedAt": "2024-03-07T08:44:31.174Z"
+    },
+    {
+      "id": "9IIUU27h6",
+      "uuid": "550fab3d-ac90-4402-8f8f-50a464785fcc",
+      "userId": "uBmeaz5pX",
+      "bankName": "extend 24/365 action-items",
+      "accountNumber": "rg4wmrymfb",
+      "routingNumber": "ot2ymx8rt",
+      "isDeleted": false,
+      "createdAt": "2024-08-20T14:25:04.079Z",
+      "modifiedAt": "2024-08-20T14:25:04.079Z"
     }
   ],
   "transactions": [

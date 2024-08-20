@@ -5,18 +5,17 @@ import { PASSWORD } from './common/constants';
 import { faker } from '@faker-js/faker';
 import { seedData } from './common/seedData';
 
-// test.beforeEach(async () => {
-//     await seedData();
-// });
+test.beforeEach(async () => {
+    await seedData();
+});
 
-test.describe('Bank accaunt creation', () => {
-    test.skip('User should be allowed to create new bank account', async({page}) => {
+test.describe('Bank Accaunts', () => {
+    test('User should be allowed to create new bank account', async({page}) => {
         
         const users = await fetchDataFromDatabase('users');
         const user = users[0];
    
         await signIn(page, user.username, PASSWORD, true);
-        const newBankName = 'AAA bank';
         
         const mobileDevice = await isMobile(page);
         if (mobileDevice) {
@@ -32,7 +31,7 @@ test.describe('Bank accaunt creation', () => {
         };
 
         await createBankAccount(page, bankData);
-        const bank = (page.locator('text=' + newBankName));
+        const bank = (page.locator('text=' + bankData.bankName));
         await expect(bank.nth(0)).toBeVisible();
     });
 });
