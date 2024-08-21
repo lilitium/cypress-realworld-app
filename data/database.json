@@ -253,6 +253,28 @@
       "isDeleted": false,
       "createdAt": "2024-01-26T14:01:01.815Z",
       "modifiedAt": "2024-03-07T08:44:31.174Z"
+    },
+    {
+      "id": "q0unfW6cy",
+      "uuid": "589eaaa5-654d-4bf2-868a-1762b3cd65dc",
+      "userId": "uBmeaz5pX",
+      "bankName": "envisioneer cross-media interfaces",
+      "accountNumber": "lcj7t9zbt8",
+      "routingNumber": "jptev3ggp",
+      "isDeleted": false,
+      "createdAt": "2024-08-20T20:31:20.722Z",
+      "modifiedAt": "2024-08-20T20:31:20.722Z"
+    },
+    {
+      "id": "Isc7O-i7T",
+      "uuid": "8ac3e690-4e9d-4347-ab33-0f73b9d78553",
+      "userId": "uBmeaz5pX",
+      "bankName": "reinvent leading-edge functionalities",
+      "accountNumber": "welbbvf4s5",
+      "routingNumber": "taodt7bvv",
+      "isDeleted": false,
+      "createdAt": "2024-08-20T20:31:23.718Z",
+      "modifiedAt": "2024-08-20T20:31:23.718Z"
     }
   ],
   "transactions": [

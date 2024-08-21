@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 
+/tests/screenshots
+
 # testing
 /coverage
 
@@ -52,3 +54,7 @@ amplifytools.xcconfig
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

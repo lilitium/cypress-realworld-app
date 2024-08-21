@@ -1,0 +1,110 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: |
+            **/node_modules
+            **/.eslintcache
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install node_modules
+        run: yarn install
+      
+      - name: Setup Playwright
+        uses: ./.github/actions/setup-playwright
+    
+      - name: Create FE build
+        run: yarn build:ci
+
+
+      # Billable !!!
+      # - name: Start application and tests (with service)
+      #   run: |
+      #     yarn start:ci &
+      #     sleep 5 &&
+      #     curl http://localhost:3000 &&
+      #     npx playwright test --config=playwright.service.config.ts --workers=10
+      #   env:
+      #     SEED_USERBASE_SIZE: 5
+      #     SEED_CONTACTS_PER_USER: 3
+      #     SEED_PAYMENTS_PER_USER: 15
+      #     SEED_REQUESTS_PER_USER: 10
+      #     SEED_BANK_ACCOUNTS_PER_USER: 1
+      #     SEED_LIKES_PER_USER: 2
+      #     SEED_COMMENTS_PER_USER: 2
+      #     SEED_NOTIFICATIONS_PER_USER: 5
+      #     SEED_BANK_TRANSFERS_PER_USER: 5
+      #     SEED_DEFAULT_USER_PASSWORD: s3cret
+      #     PAGINATION_PAGE_SIZE: 10
+      #     PORT: 3000
+      #     VITE_BACKEND_PORT: 3001
+      #     BACKEND_PORT: 3001
+      #     PLAYWRIGHT_SERVICE_ACCESS_TOKEN: ${{ secrets.PLAYWRIGHT_SERVICE_ACCESS_TOKEN }}
+      #     PLAYWRIGHT_SERVICE_URL: ${{ secrets.PLAYWRIGHT_SERVICE_URL }}
+      #     PLAYWRIGHT_SERVICE_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+
+      - name: Start application and tests
+        # start back and fronted simultaniously
+        # wait
+        # check if back is started
+        # run tests
+        run: |
+          yarn start:ci &
+          sleep 5 &&
+          curl http://localhost:3000 &&
+          npx playwright test
+        env:
+          SEED_USERBASE_SIZE: 5
+          SEED_CONTACTS_PER_USER: 3
+          SEED_PAYMENTS_PER_USER: 15
+          SEED_REQUESTS_PER_USER: 10
+          SEED_BANK_ACCOUNTS_PER_USER: 1
+          SEED_LIKES_PER_USER: 2
+          SEED_COMMENTS_PER_USER: 2
+          SEED_NOTIFICATIONS_PER_USER: 5
+          SEED_BANK_TRANSFERS_PER_USER: 5
+          SEED_DEFAULT_USER_PASSWORD: s3cret
+          PAGINATION_PAGE_SIZE: 10
+          PORT: 3000
+          VITE_BACKEND_PORT: 3001
+          BACKEND_PORT: 3001
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 10
