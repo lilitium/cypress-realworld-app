@@ -76,6 +76,10 @@ jobs:
       #     PLAYWRIGHT_SERVICE_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
 
       - name: Start application and tests
+        # start back and fronted simultaniously
+        # wait
+        # check if back is started
+        # run tests
         run: |
           yarn start:ci &
           sleep 5 &&
