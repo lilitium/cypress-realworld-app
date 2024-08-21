@@ -45,7 +45,7 @@ jobs:
       
       - name: Setup Playwright
         uses: ./.github/actions/setup-playwright
-      
+    
       - name: Create FE build
         run: yarn build:ci
 
